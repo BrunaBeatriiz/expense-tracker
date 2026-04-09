@@ -1,6 +1,6 @@
 import React from "react";
 import calculoTotalDespesas from "./funçaoSomaDespesas";
-import '../estilos/pagSaldo.css'
+
 
 const calculoSaldo = (despesas, saldo) => {
     const totalDespesas = calculoTotalDespesas(despesas);

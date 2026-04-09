@@ -7,7 +7,7 @@ import MostrarListaFiltros from './pages/paginaListaFiltros'
 import Saldo from './pages/paginaSaldo'
 import TodasDespesas from './pages/todasDespesas'
 import Historico from './pages/historico'
-import './estilos/estilosTelasMedias.css';
+
 import HistoricoDetalhado from './pages/historicoDetalhado'
 
   const App = () => {

@@ -1,6 +1,6 @@
 function Titulo(props) {
     return (
-        <h1 className={`titulo ${props.className || 
+        <h1 className={`${props.className || 
         ""}`}>
             {props.children}
         </h1>

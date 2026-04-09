@@ -2,10 +2,10 @@ import React from "react";
 import ListaDespesas from "../components/listaDespesas";
 import filtrarLista from "../functions/funcaoFiltrarLista";
 import { useState } from "react";
-import '../estilos/mostrarLista.css';
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/button";
+import Titulo from "../components/titulo";
 
 
 const MostrarListaFiltros = ({ despesas, emClickExcluirDespesa }) => {
@@ -36,39 +36,89 @@ const MostrarListaFiltros = ({ despesas, emClickExcluirDespesa }) => {
         return filtrarLista(despesas, categoriaEscolhida, dataInicial, dataFinal);
     }, [despesas, categoriaEscolhida, dataInicial, dataFinal]);
 
+
     return (
-            <main className="mainLista">
-                <div className="divInputs">
-                    <Button className="buttonVoltar"
-                        onClick={voltarPagina}><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="24px" fill="#626d00"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" /></svg></Button>
-                    <select name="categoria"
-                        className="selectPagFiltros"
-                        onChange={(event) => setCategoriaEscolhida(event.target.value)} id="idcategoria" value={categoriaEscolhida} >
-                        <option value="">Selecione o tipo da despesa:</option>
-                        {opDespesas.map((opcao) => (
-                            <option key={opcao} value={opcao}>{opcao}</option>
-                        ))}
-                        {/* //parenteses no map, para não usar um return */}
-                    </select>
-                    <Button
-                    className="buttonVoltar padding"
-                    onClick={paginaPrincipal}
-                    >
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="21px" fill="#626d00"
+    <main className="bg-gray-50 rounded-lg shadow-lg p-8 w-full max-w-6xl mx-auto">
+
+        {/* HEADER */}
+        <div className="flex items-center justify-between border-b border-[#53720a]/30 mb-6 pb-2">
+
+            <Button 
+                className="flex items-center justify-center border border-[#53720a]/30 rounded-full p-2 shadow-md
+                transition-all duration-200 cursor-pointer hover:bg-[#DCE8E0] hover:shadow-lg hover:scale-105 hover:border-[#53720a]
+                active:scale-95 active:shadow-inner
+                focus:outline-none focus:ring-2 focus:ring-[#53720a]/40"
+                onClick={voltarPagina}
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="24px" fill="#626d00"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" /></svg>
+            </Button>
+
+            <Titulo className="text-3xl font-bold text-[#53720a] text-center">
+                Despesas do Mês:
+            </Titulo>
+
+            <Button
+                className="flex items-center justify-center border border-[#53720a]/30 rounded-full p-2 shadow-md
+                transition-all duration-200 cursor-pointer hover:bg-[#DCE8E0] hover:shadow-lg hover:scale-105 hover:border-[#53720a]
+                active:scale-95 active:shadow-inner
+                focus:outline-none focus:ring-2 focus:ring-[#53720a]/40"
+                onClick={paginaPrincipal}
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="21px" fill="#626d00"
                         ><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z" /></svg>
-                    </Button>
-                </div>
-                <ListaDespesas despesas={categoriaEscolhida ? despesasFiltradas : mostrarUltimoMes} emClickExcluirDespesa={emClickExcluirDespesa} />
-                <footer>
-                    <Button
-                    className="button marginLeft"
-                     onClick={paginaTodasDespesas}>Exibir Todas Despesas</Button>
-                </footer>
-            </main>
-    )
+ 
+            </Button>
+
+        </div>
+
+        {/* SELECT SOZINHO */}
+        <div className="mb-6 px-2">
+            <select
+                name="categoria"
+                className="bg-[#E8EEDC] w-full px-4 py-2 rounded-lg shadow-sm
+                border border-[#C97C8C]/20
+                focus:outline-none focus:ring-2 focus:ring-[#C97C8C]/40
+                focus:border-[#C97C8C]
+                transition-all duration-200"
+                onChange={(event) => setCategoriaEscolhida(event.target.value)}
+                value={categoriaEscolhida}
+            >
+                <option value="">Selecione o tipo da despesa:</option>
+                {opDespesas.map((opcao) => (
+                    <option key={opcao} value={opcao}>{opcao}</option>
+                ))}
+            </select>
+        </div>
+
+        <ListaDespesas 
+            despesas={categoriaEscolhida ? despesasFiltradas : mostrarUltimoMes} 
+            emClickExcluirDespesa={emClickExcluirDespesa} 
+        />
+
+        <footer>
+            <Button
+                className="mt-6 w-full flex items-center justify-center gap-2
+                bg-[#F5E4E7] text-[#C97C8C] font-semibold py-2 rounded-lg
+                shadow-sm border border-[#C97C8C]/20
+                transition-all duration-200
+                hover:bg-[#efd6db] hover:gap-3 hover:shadow-md hover:scale-[1.01]
+                active:scale-95"
+                onClick={paginaTodasDespesas}
+            >
+                Exibir Todas Despesas
+            </Button>
+        </footer>
+
+    </main>
+)
 }
 
+
 export default MostrarListaFiltros;
+
+
+
+ 
 
 // "incluir somente despesas que estejam dentro do intervalo de datas E que sejam da categoria filtrada (ou sem filtro de categoria)"
 

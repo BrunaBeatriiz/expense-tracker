@@ -44,36 +44,70 @@ const FormDespesas = ({ emClickAdicionar }) => {
     }
 
     return (
-        <div className="form">
-            <form action="" onSubmit={handleSubmit}>
-                <input
-                    type="text" name="titulo" id="idtitulo"
-                    value={titulo}
-                    placeholder="Digite o nome da despesa:"
-                    onChange={(event) => setTitulo(event.target.value)} />
-                <input type="date"
-                    name="data" id="id-data"
-                    value={data}
-                    onChange={(event) => setData(event.target.value)}
-                />
-                <select name="categoria" id="id-categoria" value={categoria} onChange={escolha}>
-                    <option value="">Selecione o tipo da despesa:</option>
-                    {opDespesas.map((opcao) => (
-                        <option key={opcao} value={opcao}>{opcao}</option>
-                    ))}
-                    {/* //parenteses no map, para não usar um return */}
-                </select>
-                <input type="number"
-                    name="valor" id="idvalor"
-                    value={valor}
-                    placeholder="Digite o valor da despesa:"
-                    onChange={(event) => setValor(event.target.value)}
-                    min="0"
-                    step="0.01" />
-                <Button className="button" type="submit">Adicionar</Button>
-                
+        <div className="">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
-            </form>
+  <input
+    className="bg-[#E8EEDC] px-3 py-2 rounded-lg shadow-sm
+    border border-[#C97C8C]/10
+    placeholder:text-gray-500
+    focus:outline-none focus:ring-2 focus:ring-[#C97C8C]/40
+    focus:border-[#C97C8C]
+    transition-all duration-200"
+    type="text"
+    value={titulo}
+    placeholder="Digite o nome da despesa:"
+    onChange={(e) => setTitulo(e.target.value)}
+  />
+
+  <input
+    className="bg-[#E8EEDC] px-3 py-2 rounded-lg shadow-sm
+    border border-[#C97C8C]/10
+    focus:outline-none focus:ring-2 focus:ring-[#C97C8C]/40
+    focus:border-[#C97C8C]"
+    type="date"
+    value={data}
+    onChange={(e) => setData(e.target.value)}
+  />
+
+  <select
+    className="bg-[#E8EEDC] px-3 py-2 rounded-lg shadow-sm
+    border border-[#C97C8C]/10
+    focus:outline-none focus:ring-2 focus:ring-[#C97C8C]/40
+    focus:border-[#C97C8C]"
+    value={categoria}
+    onChange={escolha}
+  >
+    <option value="">Selecione o tipo da despesa:</option>
+    {opDespesas.map((opcao) => (
+      <option key={opcao} value={opcao}>{opcao}</option>
+    ))}
+  </select>
+
+  <input
+    className="bg-[#E8EEDC] px-3 py-2 rounded-lg shadow-sm
+    border border-[#C97C8C]/10
+    placeholder:text-gray-500
+    focus:outline-none focus:ring-2 focus:ring-[#C97C8C]/40
+    focus:border-[#C97C8C]"
+    type="number"
+    value={valor}
+    placeholder="Digite o valor da despesa:"
+    onChange={(e) => setValor(e.target.value)}
+  />
+
+  <Button
+    className="bg-[#C97C8C] px-3 py-2 rounded-lg shadow-md  mb-4 text-white font-semibold
+    transition-all duration-200
+    hover:scale-105 hover:shadow-lg hover:bg-[#b76c7c]
+    active:scale-95 active:shadow-inner
+    focus:outline-none focus:ring-2 focus:ring-[#C97C8C]"
+    type="submit"
+  >
+    Adicionar
+  </Button>
+
+</form>
         </div>
     )
 }

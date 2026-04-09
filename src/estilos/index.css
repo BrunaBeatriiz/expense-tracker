@@ -1,33 +1,55 @@
-*{
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Se quiser, pode adicionar cores ou ajustes customizados aqui */
+
+
+/* *{
     padding: 0px;
     margin: 0px;
     box-sizing: border-box;
 }
+ */
 
-
-
+/* 
 /* Color Theme Swatches in Hex */
-.Muted_-Luxurious-Spa-Room-Decor-1-hex { color: #406473; }
+ .Muted_-Luxurious-Spa-Room-Decor-1-hex { color: #406473; }
 .Muted_-Luxurious-Spa-Room-Decor-2-hex { color: #CCD6D9; }
-.Muted_-Luxurious-Spa-Room-Decor-3-hex { color: #8AA696; }
-.Muted_-Luxurious-Spa-Room-Decor-4-hex { color: #667302; }
+.v1 { color: #8AA696; }
+.v2 { color: #667302; }
 .Muted_-Luxurious-Spa-Room-Decor-5-hex { color: #F2B694; }
-.Muted_-Luxurious-Spa-Room-Decor-5-hex { color: #53720a; }
-.Muted_-Luxurious-Spa-Room-Decor-5-hex { color: rgb(226, 15, 0); }
+.v3 { color: #53720a; }
+.Muted_-Luxurious-Spa-Room-Decor-5-hex { color: rgb(226, 15, 0); } 
+
+.back-grad-green{
+   background-image: linear-gradient(#8AA696, #53720a);
+}
 
 
 
 body{
-    width: 100vw;
     padding: 20px;
-    height: auto;
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-    background-color:#406473;
+
+    background-image: linear-gradient(to left, #C9D9D1, #EEF5F2);
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*
 main{
     background-color: #CCD6D9;
     width: 90vw;
@@ -87,7 +109,7 @@ p{
     font-size: 1.1em;
 }
 
-
+  */
 
 
 

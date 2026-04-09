@@ -1,9 +1,9 @@
 import { Navigate, data, useNavigate } from "react-router-dom";
 import Button from "../components/button";
 import Titulo from "../components/titulo";
-import '../estilos/historico.css'
+
 import { useState } from "react";
-import '../estilos/dashboard.css'
+
 import GraficoBarra from "../components/graficoBarra";
 import { useEffect } from "react";
 import calculoSaldo from "../functions/funçaoCalculoSaldo";
@@ -111,14 +111,24 @@ const Historico = ({ historicoDespesas, setHistoricoDespesas, despesas, metaGast
   console.log("OLLLLLHA AQ O SAAAALLLDOOOOO:", saldo);
 
   return (
-    <main>
-      <Titulo>Historico</Titulo>
-     <div className="containerGrafico">
+    <main className="bg-gray-50 rounded-xl shadow-lg p-8 md:12 w-full max-w-6xl mx-auto">
+            <Titulo className="text-3xl font-bold text-[#53720a] mb-4 text-center">Painel Financeiro:</Titulo>
+
+
+      <h2 className="text-xl font-semibold text-[#53720a] mb-6 text-center">Historico</h2>
+
+      {/* grafico */}
+     <div className="mb-8 bg-white p-4 rounded-lg shadow-sm border border-[#53720a]/10">
      <GraficoBarra historicoDespesas={historicoDespesas} />
      </div>
+     
       <button onClick={criarRegistroMes}>Forçar novo registro</button>
+
       <select name="categoria"
-        className="selectPagFiltros"
+        className="bg-[#E8EEDC] w-full px-3 py-1 rounded-lg shadow-sm mb-6
+                            border border-[#C97C8C]/20
+                            focus:outline-none focus:ring-2 focus:ring-[#C97C8C]/40
+                            focus:border-[#C97C8C] transition-all duration-200 hover:shadow-md"
         onChange={(event) => setMesEscolhido(event.target.value)} id="idcategoria" value={mesEscolhido} menuPlacement="bottom">
         <option value="">Selecione o tipo da despesa:</option>
         {opMes.map((opcao) => (
@@ -129,16 +139,27 @@ const Historico = ({ historicoDespesas, setHistoricoDespesas, despesas, metaGast
 
 
 
-      {historicoDespesas.length === 0 ? (<p>Nenhum historico disponível ainda.</p>) : (
-        <section className="listaHistorico">
+      {historicoDespesas.length === 0 ? (
+        <p className="text-center text-gray-500">Nenhum historico disponível ainda.</p>
+      ) : (
+        <section className="p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {historicoDespesas.map((item, id) => (
-            <div className="itemHistorico" key={id}>
-              <div id="divButton">
-                <p>{nomeDoMes(item.mes)}</p>
+            <div
+            className="bg-white p-4 rounded-lg shadow-sm border-l-4 border-[#53720a] hover:scale-[1.02] hover:shadow-lg hover:bg-[#f8faf6] transition-all duration-300 cursor-pointer"
+             key={id}>
+              <div className="flex justify-between mb-1">
+           
+                <h2 className="text-lg font-semibold text-[#53720a] mb-4 text-center">{nomeDoMes(item.mes)}</h2>
                 <Button className="buttonHistorico" onClick={()=>paginaDetalhada(item.id)}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#626d00"><path d="m298-262-56-56 121-122H80v-80h283L242-642l56-56 218 218-218 218Zm222-18v-80h360v80H520Zm0-320v-80h360v80H520Zm120 160v-80h240v80H640Z"/></svg></Button>
               </div>
-              <p><strong>Total:</strong> R$:{item.totalDespesas.toFixed(2)}</p>
-              <p><strong>Meta:</strong> R$:{item.meta.toFixed(2)}</p>
+              <p className="text-gray-700 text-bold">Total:
+               <span className=" text-[#C97C8C] font-bold ml-1">
+                R$:{item.totalDespesas.toFixed(2)}
+               </span>
+               </p>
+              <p className="text-gray-700 text-bold">Meta:
+                <span className=" text-[#C97C8C] font-bold ml-1">R$:{item.meta.toFixed(2)}</span>
+              </p>
               <p><small>Registrado em: {new Date(item.dataRegistro).toLocaleDateString("pt-BR")}</small></p>
               
             </div>

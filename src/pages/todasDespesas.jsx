@@ -24,13 +24,20 @@ const TodasDespesas = ({ despesas, emClickExcluirDespesa }) => {
 
 
     return (
-        <main>
-            <div className="divInputs">
-                <Button className="buttonVoltar"
+        <main className="bg-gray-50 rounded-lg shadow-lg p-6 w-full max-w-6xl mx-auto">
+            <div className="flex justify-between mb-4 gap-4 px-2">
+                <Button 
+                className="flex items-center justify-center border border-[#53720a]/30 rounded-full p-2 shadow-md
+                    transition-all duration-200 cursor-pointer hover:bg-[#DCE8E0] hover:shadow-lg hover:scale-105 hover:border-[#53720a]
+                    active:scale-95 active:shadow-inner
+                    focus:outline-none focus:ring-2 focus:ring-[#53720a]/40"
                     onClick={paginaListaUmtimoMes}
                     ><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="24px" fill="#626d00"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" /></svg></Button>
                 <select name="categoria"
-                    className="selectPagFiltros"
+                    className="bg-[#E8EEDC] w-full px-3 py-1 rounded-lg shadow-sm
+                            border border-[#C97C8C]/10
+                            focus:outline-none focus:ring-2 focus:ring-[#C97C8C]/40
+                            focus:border-[#C97C8C]"     
                     onChange={(event) => setCategoriaEscolhida(event.target.value)} id="idcategoria" value={categoriaEscolhida} >
                     <option value="">Selecione o tipo da despesa:</option>
                     {opDespesas.map((opcao) => (
@@ -39,7 +46,10 @@ const TodasDespesas = ({ despesas, emClickExcluirDespesa }) => {
                     {/* //parenteses no map, para não usar um return */}
                 </select>
                 <Button
-                    className="buttonVoltar padding"
+                    className="flex items-center justify-center border border-[#53720a]/30 rounded-full p-2 shadow-md
+                    transition-all duration-200 cursor-pointer hover:bg-[#DCE8E0] hover:shadow-lg hover:scale-105 hover:border-[#53720a]
+                    active:scale-95 active:shadow-inner
+                    focus:outline-none focus:ring-2 focus:ring-[#53720a]/40"
                     onClick={paginaPrincipal}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="21px" fill="#626d00"
