@@ -23,7 +23,7 @@ const Dashboard = ({ despesas, saldo, metaGastos }) => {
     }
 
     const paginaDespesasFiltros = () => {
-        navigate('/paginaListaFiltros');
+        navigate('/ListaDespesasFiltros');
     }
     const paginaHistorico = () => {
         navigate('/historico');

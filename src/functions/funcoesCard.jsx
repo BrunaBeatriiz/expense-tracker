@@ -43,8 +43,3 @@ export function proximaDespesa(despesas){
 
     return proxima || null;
 }
-
-
-export function calculoMeta (despesas, metaGastos){
-    
-}

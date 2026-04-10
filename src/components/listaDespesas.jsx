@@ -4,7 +4,7 @@ import Button from "./button";
 const ListaDespesas = ({ despesas = [], resumida = false,
     emClickExcluirDespesa }) => {
     if (despesas.length === 0) {
-        return (<p className={resumida ? "" : "estilop "}>Nenhuma despesa encotrada.</p>);
+        return (<p className="text-center text-gray-500 mt-4">Nenhuma despesa encontrada.</p>);
     }
 
     return (
@@ -39,7 +39,7 @@ const ListaDespesas = ({ despesas = [], resumida = false,
 
                             {/* título */}
                             <h3 className="font-semibold text-[#53720a] text-sm">
-                                {despesa.titulo.toUpperCase()}
+                                {despesa.titulo?.toUpperCase()}
                             </h3>
 
                             {/* categoria (estilo tag) */}
@@ -53,7 +53,7 @@ const ListaDespesas = ({ despesas = [], resumida = false,
                                 {/* lado esquerdo */}
                                 <div className="flex flex-col">
                                     <span className="text-xs text-gray-400">
-                                        {new Date(despesa.data).toLocaleDateString('pt-BR')}
+                                        {despesa.data && new Date(despesa.data).toLocaleDateString('pt-BR')}
                                     </span>
 
                                     <span className="text-[#C97C8C] font-bold text-sm mt-1">
@@ -64,7 +64,7 @@ const ListaDespesas = ({ despesas = [], resumida = false,
                                 {/* botões */}
                                 <div className="flex gap-1">
                                     <Button
-                                        onClick={() => emClickExcluirDespesa(despesa.id)}
+                                        onClick={() => emClickExcluirDespesa?. (despesa.id)}
                                         className="p-1 rounded hover:bg-red-100 transition"
                                     >
                                         🗑️

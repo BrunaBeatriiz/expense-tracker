@@ -1,115 +1,139 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Button from "./button";
 
 const FormDespesas = ({ emClickAdicionar }) => {
-    const [titulo, setTitulo] = useState("");
-    const [valor, setValor] = useState("");
-    const [data, setData] = useState("");
-    const [categoria, setCategoria] = useState("");
+  const [titulo, setTitulo] = useState("");
+  const [valor, setValor] = useState("");
+  const [data, setData] = useState("");
+  const [categoria, setCategoria] = useState("");
+  const [erro, setErro] = useState("");
 
-    const opDespesas = ["Moradia", "Alimentação", "Transporte", "Saúde", "Educação", "Contas", "Lazer", "Pessoal", "Outros"];
+  const opDespesas = ["Moradia", "Alimentação", "Transporte", "Saúde", "Educação", "Contas", "Lazer", "Pessoal", "Outros"];
 
-    const escolha = (event) => {
-        setCategoria(event.target.value);
-        //atualiza a categoria escolhida
-    }
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        if (!titulo.trim() || !valor.trim()) {
-            return alert("Preencha o título e o valor da despesa.");
-        }
 
-        if (!data) {
-            return alert("Selecione uma data.")
-        }
 
-        const dataObj = new Date(data);
-        const hoje = new Date();
-        const doisAnos = new Date();
-        doisAnos.setFullYear(hoje.getFullYear() - 2);
+  function mostrarMsgErro(msg){
+    setErro(msg);
+      setTimeout(() => setErro(""), 2000);
 
-        if (dataObj < doisAnos) {
-            return alert("A data selecionada deve ser de no máximo dois anos atrás.")
-        }
-        if (!categoria) {
-            return alert("Selecione uma categoria.")
-        }
+  }
 
-        emClickAdicionar(titulo, valor, data, categoria);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (!titulo.trim() || !valor.trim() || Number(valor) <= 0) {
+      mostrarMsgErro("Preencha o título e o valor corretamente.");
+    
+      return;
 
-        setTitulo("");
-        setValor("");
-        setData("");
-        setCategoria("");
+
     }
 
-    return (
-        <div className="">
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+    if (!data) {
+      mostrarMsgErro("Selecione uma data.");
+      return;
+    }
 
-  <input
-    className="bg-[#E8EEDC] px-3 py-2 rounded-lg shadow-sm
-    border border-[#C97C8C]/10
-    placeholder:text-gray-500
-    focus:outline-none focus:ring-2 focus:ring-[#C97C8C]/40
-    focus:border-[#C97C8C]
-    transition-all duration-200"
-    type="text"
-    value={titulo}
-    placeholder="Digite o nome da despesa:"
-    onChange={(e) => setTitulo(e.target.value)}
-  />
+    const dataObj = new Date(data);
+    const hoje = new Date();
+    const doisAnos = new Date();
+    doisAnos.setFullYear(hoje.getFullYear() - 2);
 
-  <input
-    className="bg-[#E8EEDC] px-3 py-2 rounded-lg shadow-sm
-    border border-[#C97C8C]/10
-    focus:outline-none focus:ring-2 focus:ring-[#C97C8C]/40
-    focus:border-[#C97C8C]"
-    type="date"
-    value={data}
-    onChange={(e) => setData(e.target.value)}
-  />
+    if (dataObj < doisAnos) {
+      mostrarMsgErro ("A data selecionada deve ser de no máximo dois anos atrás.");
+      return;
+     
+    }
+    if (!categoria) {
+      mostrarMsgErro("Selecione uma categoria.");
+      return;
+    }
 
-  <select
-    className="bg-[#E8EEDC] px-3 py-2 rounded-lg shadow-sm
-    border border-[#C97C8C]/10
-    focus:outline-none focus:ring-2 focus:ring-[#C97C8C]/40
-    focus:border-[#C97C8C]"
-    value={categoria}
-    onChange={escolha}
-  >
-    <option value="">Selecione o tipo da despesa:</option>
-    {opDespesas.map((opcao) => (
-      <option key={opcao} value={opcao}>{opcao}</option>
-    ))}
-  </select>
+    emClickAdicionar({ titulo, valor, data, categoria });
 
-  <input
-    className="bg-[#E8EEDC] px-3 py-2 rounded-lg shadow-sm
-    border border-[#C97C8C]/10
-    placeholder:text-gray-500
-    focus:outline-none focus:ring-2 focus:ring-[#C97C8C]/40
-    focus:border-[#C97C8C]"
-    type="number"
-    value={valor}
-    placeholder="Digite o valor da despesa:"
-    onChange={(e) => setValor(e.target.value)}
-  />
+    setTitulo("");
+    setValor("");
+    setData("");
+    setCategoria("");
 
-  <Button
-    className="bg-[#C97C8C] px-3 py-2 rounded-lg shadow-md  mb-4 text-white font-semibold
-    transition-all duration-200
-    hover:scale-105 hover:shadow-lg hover:bg-[#b76c7c]
-    active:scale-95 active:shadow-inner
-    focus:outline-none focus:ring-2 focus:ring-[#C97C8C]"
-    type="submit"
-  >
-    Adicionar
-  </Button>
+    mostrarMsgErro("Despesa adicionada com sucesso!");
+  }
 
-</form>
-        </div>
-    )
+  return (
+    <div className="">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        {erro && (
+          <p className="text-red-500 text-sm mt-1 transition-all duration-300">
+            {erro}
+          </p>
+        )}
+
+        <input
+          className="bg-[#E8EEDC] px-3 py-2 rounded-lg shadow-sm
+          border border-[#C97C8C]/10
+          placeholder:text-gray-500
+          focus:outline-none focus:ring-2 focus:ring-[#C97C8C]/40
+          focus:border-[#C97C8C]
+          transition-all duration-200"
+          type="text"
+
+          value={titulo}
+          placeholder="Digite o nome da despesa:"
+          onChange={(e) => setTitulo(e.target.value)}
+        />
+
+        <input
+          className="bg-[#E8EEDC] px-3 py-2 rounded-lg shadow-sm
+          border border-[#C97C8C]/10
+          focus:outline-none focus:ring-2 focus:ring-[#C97C8C]/40
+          focus:border-[#C97C8C]"
+          type="date"
+          value={data}
+          onChange={(e) => setData(e.target.value)}
+        />
+
+        <select
+          className="bg-[#E8EEDC] px-3 py-2 rounded-lg shadow-sm
+          w-full
+          border border-[#C97C8C]/10
+          focus:outline-none focus:ring-2 focus:ring-[#C97C8C]/40
+          focus:border-[#C97C8C]"
+          value={categoria}
+          onChange={(e) => setCategoria(e.target.value)}
+        >
+          <option value="">Selecione o tipo da despesa:</option>
+          {opDespesas.map((opcao) => (
+            <option key={opcao} value={opcao}>{opcao}</option>
+          ))}
+        </select>
+
+        <input
+          className="bg-[#E8EEDC] px-3 py-2 rounded-lg shadow-sm
+          border border-[#C97C8C]/10
+          placeholder:text-gray-500
+          focus:outline-none focus:ring-2 focus:ring-[#C97C8C]/40
+          focus:border-[#C97C8C]"
+          type="number"
+          value={valor}
+          placeholder="Digite o valor da despesa:"
+          step="0.01"
+          min="0"
+          onChange={(e) => setValor(e.target.value)}
+        />
+
+        <Button
+          className="bg-[#C97C8C] px-3 py-2 rounded-lg shadow-md  mb-4 text-white font-semibold
+          transition-all duration-200
+          hover:scale-105 hover:shadow-lg hover:bg-[#b76c7c]
+          active:scale-95 active:shadow-inner
+          focus:outline-none focus:ring-2 focus:ring-[#C97C8C]"
+          type="submit"
+        >
+          Adicionar
+        </Button>
+
+      </form>
+    </div>
+  )
 }
 
 export default FormDespesas;

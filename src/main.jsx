@@ -1,122 +1,80 @@
-import { StrictMode, useEffect, useState } from 'react'
+import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Dashboard from './pages/dashboard'
 import Despesas from './pages/Despesas'
-import MostrarListaFiltros from './pages/paginaListaFiltros'
+import ListaDespesasFiltros from './pages/ListaDespesasFiltros'
 import Saldo from './pages/paginaSaldo'
 import TodasDespesas from './pages/todasDespesas'
 import Historico from './pages/historico'
-
+import useDespesas from './hooks/useDespesas'
 import HistoricoDetalhado from './pages/historicoDetalhado'
+import useSaldo from './hooks/useSaldo'
+import useMetaGastos from './hooks/useMetaGastos'
+import useHistoricoDespesas from './hooks/useHistoricoDespesas'
 
-  const App = () => {
-    const [despesas, setDespesas] = useState(() => {
-      const despesasSalvas = localStorage.getItem("despesas");
-      try{
-        return despesasSalvas ? JSON.parse(despesasSalvas) : [];
-      }catch(error){
-        console.error("erro ao ler o localStorage:", error)
-        return [];
-      }
-    });
+const App = () => {
 
-    const [saldo, setSaldo] = useState(() => {
-      const saldoSalvo = localStorage.getItem("saldo");
-      try{
-        return saldoSalvo ? parseFloat(saldoSalvo) : 0;
-      }catch(error){
-        console.error("erro ao ler o saldo do localstorage:", error);
-        return 0;
-      }
-    });
+  const { despesas, setDespesas } = useDespesas();
 
-    const [metaGastos, setMetaGastos] = useState(() => {
-      const metaSalva = localStorage.getItem("metaGastos");
-      try {
-          return metaSalva ? parseFloat(metaSalva) : 0;
-      } catch (error) {
-          console.error("erro ao ler o saldo do localstorage:", error);
-          return 0;
-      }
-  });
+  const { saldo, setSaldo } = useSaldo();
 
-    const [historicoDespesas, setHistoricoDespesas] = useState(()=>{
-      const historicoSalvo = localStorage.getItem("historicoDespesas");
-      try{
-        return historicoSalvo ? JSON.parse(historicoSalvo) : [];
-      }catch(error) {
-        console.log("erro ao tentar resgatar historico:", error);
-        return [];
-      }
-    })
+  const { metaGastos, setMetaGastos } = useMetaGastos();
 
-
-  useEffect(() => {
-      localStorage.setItem("metaGastos", metaGastos.toString());
-  }, [metaGastos]);
-
-
-    useEffect(() => {
-      localStorage.setItem("despesas", JSON.stringify(despesas));
-    }, [despesas]);
-
-    useEffect(() => {
-      localStorage.setItem("saldo", saldo.toString());
-    }, [saldo]);
+  const { historicoDespesas, setHistoricoDespesas } = useHistoricoDespesas();
 
 
 
-    const emClickExcluirDespesa = (despesaId) => {
+  const emClickExcluirDespesa = (despesaId) => {
 
-      const excluirDespesa = despesas.filter((despesa) => despesaId !== despesa.id);
+    const excluirDespesa = despesas.filter((despesa) => despesaId !== despesa.id);
 
-      setDespesas(excluirDespesa);
+    setDespesas(excluirDespesa);
 
-    }
+  }
 
-    
-  
-      const router = createBrowserRouter([
-        {
-          path: "/",
-          element: <Dashboard saldo={saldo} setSaldo={setSaldo} despesas={despesas} metaGastos={metaGastos} setMetaGastos={setMetaGastos}/>
-        },{
-          path:"/Despesas",
-          element:<Despesas despesas={despesas} setDespesas={setDespesas}/>,
-        },{
-          path:"/paginaListaFiltros",
-          element:<MostrarListaFiltros despesas={despesas}
-          emClickExcluirDespesa={emClickExcluirDespesa}/>,
-        },
-        {
-          path:"/Saldo",
-          element: <Saldo  despesas={despesas} saldo={saldo} setSaldo={setSaldo} metaGastos={metaGastos} setMetaGastos={setMetaGastos}/>,
-        },
-        {
-          path:"/todasDespesas",
-          element:<TodasDespesas despesas={despesas}  emClickExcluirDespesa={emClickExcluirDespesa}/>,
-        },
-        {
-          path:"/historico",
-          element: <Historico historicoDespesas={historicoDespesas} setHistoricoDespesas={setHistoricoDespesas} despesas={despesas} metaGastos={metaGastos} saldo={saldo}/>
-         
-        },
-        {
-          path:"/historicoDetalhado/:id",
-          element: <HistoricoDetalhado historicoDespesas={historicoDespesas}/>
-         
-        },
-      ]);
 
-      return <RouterProvider router={router} />;
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Dashboard saldo={saldo} setSaldo={setSaldo} despesas={despesas} metaGastos={metaGastos} setMetaGastos={setMetaGastos} />
+    }, {
+      path: "/Despesas",
+      element: <Despesas despesas={despesas} setDespesas={setDespesas} />,
+    }, {
+      path: "/ListaDespesasFiltros",
+      element: <ListaDespesasFiltros despesas={despesas}
+        emClickExcluirDespesa={emClickExcluirDespesa} />,
+    },
+    {
+      path: "/Saldo",
+      element: <Saldo despesas={despesas} saldo={saldo} setSaldo={setSaldo} metaGastos={metaGastos} setMetaGastos={setMetaGastos} />,
+    },
+    {
+      path: "/todasDespesas",
+      element: <TodasDespesas despesas={despesas} emClickExcluirDespesa={emClickExcluirDespesa} />,
+    },
+    {
+      path: "/historico",
+      element: <Historico historicoDespesas={historicoDespesas} setHistoricoDespesas={setHistoricoDespesas} despesas={despesas} metaGastos={metaGastos} saldo={saldo} />
+
+    },
+    {
+      path: "/historicoDetalhado/:id",
+      element: <HistoricoDetalhado historicoDespesas={historicoDespesas} />
+
+    },
+  ]);
+
+  return <RouterProvider router={router} />;
 
 }
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App/>
+    <App />
   </StrictMode>,
 )
 

@@ -15,15 +15,20 @@
 
 //         return resultadoIntervalo && resultadoFiltroCategoria;
 
-       
+
 //     });
 
 // }
 export default function filtrarLista(despesas, categoriaEscolhida, dataInicial, dataFinal) {
+
+
     console.log("recibida as lista", despesas);
+
     const hoje = new Date();
-    const primeiroDoMes = new Date(hoje.getFullYear(), hoje.getMonth(),1);
-    const ultimoDoMes = new Date(hoje.getFullYear(), hoje.getMonth() + 1,0);
+
+    const primeiroDoMes = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+
+    const ultimoDoMes = new Date(hoje.getFullYear(), hoje.getMonth() + 1, 0);
 
 
     const novaDataInicial = dataInicial ? new Date(dataInicial) : primeiroDoMes;
@@ -37,7 +42,7 @@ export default function filtrarLista(despesas, categoriaEscolhida, dataInicial, 
 
         return resultadoIntervalo && resultadoFiltroCategoria;
 
-       
+
     });
 
 }

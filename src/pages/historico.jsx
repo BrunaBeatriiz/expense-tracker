@@ -1,4 +1,4 @@
-import { Navigate, data, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../components/button";
 import Titulo from "../components/titulo";
 
@@ -6,7 +6,6 @@ import { useState } from "react";
 
 import GraficoBarra from "../components/graficoBarra";
 import { useEffect } from "react";
-import calculoSaldo from "../functions/funçaoCalculoSaldo";
 
 
 const Historico = ({ historicoDespesas, setHistoricoDespesas, despesas, metaGastos,saldo }) => {
